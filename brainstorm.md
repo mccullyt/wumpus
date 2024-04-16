@@ -5,22 +5,6 @@ This file is just a place to get my thoughts out.
 ## Classes
 These are the classes I know I'll need.
 
-
-
-
-
-
-
-
-### Room
-#### Properties
-##### ArryRoomContents
-##### ArryExits
-#### Methods
-##### PopulateRoom
-##### Display
-
-
 ### Bat
 #### Properties
 ##### NumCurrentRoom
@@ -40,12 +24,10 @@ These are the classes I know I'll need.
 ##### DisplaySplash
 ##### PromptPlayer
 
-
 ### Pit
 #### Properties
 ##### NumCurrentRoom
 #### Methods
-##### Spawn(TargetRoom)
 
 ### Player
 #### Properties
@@ -59,6 +41,13 @@ These are the classes I know I'll need.
 ##### Move(NumTargetRoom)
 ##### Spawn(NumTargetRoom)
 ##### Listen()
+
+### Room
+#### Properties
+##### ArryRoomContents
+##### ArryExits
+#### Methods
+##### Display
 
 ### Wumpus
 #### Properties
