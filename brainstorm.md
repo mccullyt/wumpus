@@ -29,7 +29,7 @@ These are the classes I know I'll need.
 ##### IsAlive
 #### Methods
 ##### Move(NumTargetRoom)
-##### Spawn(TargetRoom)
+
 
 ### GameMaster
 #### Properties
@@ -40,6 +40,7 @@ These are the classes I know I'll need.
 ##### PopulateRooms
 ##### DisplaySplash
 ##### PromptPlayer
+##### SpawnObject(object, room)
 
 ### Pit
 #### Properties
@@ -58,12 +59,13 @@ These are the classes I know I'll need.
 ##### Move(NumTargetRoom)
 ##### Spawn(NumTargetRoom)
 ##### Listen()
-##### Toggle Firemode()
+##### Toggle FireMode()
 
 ### Room
 #### Properties
 ##### ArryRoomContents
 ##### ArryExits
+##### NumCurrentRoom
 #### Methods
 ##### Display()
 
@@ -77,6 +79,27 @@ These are the classes I know I'll need.
 ##### Move(NumTargetRoom)
 ##### Spawn(NumTargetRoom)
 
-## General flow of the game
-The general flow of the game is as such:
-At startup, the GameMaster object will display the startup splashscreen, populate the rooms, and then prompt the player.
+## Startup Loop
+### Game starts up
+#### Create Room array
+#### Create GameMaster
+#### Populate Rooms
+#### Spawn Player in Room 0.
+
+
+## Game Play Loop
+### GameMaster prompts player for action
+#### If player moves to different room
+##### Set numTarget Room
+##### Copy player to numTargetRoom
+##### Remove player from current room
+##### Check for collisions
+#### If player wants to attack
+##### Check if player has enough arrows
+##### If so, fire arrow into target room and check for collision
+##### Iterate game play loop
+
+
+
+
+
