@@ -5,6 +5,23 @@ This file is just a place to get my thoughts out.
 ## Classes
 These are the classes I know I'll need.
 
+### Thing
+#### Properties
+##### NumCurrentRoom
+#### Methods
+##### Spawn(NumTargetRoom)
+
+### Creature
+#### Properties
+##### NumTargetRoom
+##### IsAlive
+#### Methods
+##### Move(NumTargetRoom)
+##### Listen()
+
+
+
+
 ### Bat
 #### Properties
 ##### NumCurrentRoom
@@ -41,13 +58,14 @@ These are the classes I know I'll need.
 ##### Move(NumTargetRoom)
 ##### Spawn(NumTargetRoom)
 ##### Listen()
+##### Toggle Firemode()
 
 ### Room
 #### Properties
 ##### ArryRoomContents
 ##### ArryExits
 #### Methods
-##### Display
+##### Display()
 
 ### Wumpus
 #### Properties
@@ -55,6 +73,7 @@ These are the classes I know I'll need.
 ##### NumTargetRoom
 ##### IsAlive
 #### Methods
+##### CheckRooms()
 ##### Move(NumTargetRoom)
 ##### Spawn(NumTargetRoom)
 

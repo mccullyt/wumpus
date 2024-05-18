@@ -1,20 +1,21 @@
 
 
-let thing = require("./thing")
+import Thing from './thing.mjs'
 
 class Player extends Thing{
     // #region fields
     // static NumCurrentRoom = 10;
     // #endregion
 
-    // #region constructors
+    // // #region constructors
     constructor(){
+        super();
         // this.NumCurrentRoom;
         this.NumArrows = 10;
         this.IsAlive = true
         this.IsFireModeOn = false
     }
-    //#endregion
+    #endregion
 
     // #region Methods
     fireArrow(){}
