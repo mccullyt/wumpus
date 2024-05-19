@@ -19,5 +19,4 @@ export default class Creature extends Thing{
     // #endregion
 }
 
-const creature = new Creature();
-console.log(creature.NumCurrentRoom);
+

@@ -1,0 +1,104 @@
+{
+      "room": [
+        {
+          "pathA": "2",
+          "pathB": "8",
+          "pathC": "5"
+        },
+        {
+          "pathA": "1",
+          "pathB": "10",
+          "pathC": "3"
+        },
+        {
+          "pathA": "2",
+          "pathB": "12",
+          "pathC": "4"
+        },
+        {
+          "pathA": "3",
+          "pathB": "14",
+          "pathC": "5"
+        },
+        {
+          "pathA": "4",
+          "pathB": "6",
+          "pathC": "1"
+        },
+        {
+          "pathA": "5",
+          "pathB": "15",
+          "pathC": "7"
+        },
+        {
+          "pathA": "6",
+          "pathB": "17",
+          "pathC": "8"
+        },
+        {
+          "pathA": "7",
+          "pathB": "1",
+          "pathC": "9"
+        },
+        {
+          "pathA": "8",
+          "pathB": "18",
+          "pathC": "10"
+        },
+        {
+          "pathA": "9",
+          "pathB": "2",
+          "pathC": "11"
+        },
+        {
+          "pathA": "10",
+          "pathB": "19",
+          "pathC": "12"
+        },
+        {
+          "pathA": "11",
+          "pathB": "3",
+          "pathC": "13"
+        },
+        {
+          "pathA": "12",
+          "pathB": "20",
+          "pathC": "14"
+        },
+        {
+          "pathA": "13",
+          "pathB": "4",
+          "pathC": "15"
+        },
+        {
+          "pathA": "14",
+          "pathB": "16",
+          "pathC": "6"
+        },
+        {
+          "pathA": "15",
+          "pathB": "17",
+          "pathC": "20"
+        },
+        {
+          "pathA": "16",
+          "pathB": "7",
+          "pathC": "18"
+        },
+        {
+          "pathA": "17",
+          "pathB": "9",
+          "pathC": "19"
+        },
+        {
+          "pathA": "18",
+          "pathB": "11",
+          "pathC": "20"
+        },
+        {
+          "pathA": "19",
+          "pathB": "13",
+          "pathC": "16"
+        }
+      ]
+  }

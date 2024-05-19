@@ -1,14 +1,14 @@
-import Creature from './thing.mjs'
+import Thing from './thing.mjs'
 
-class pit extends Room {
+export default class room extends Thing {
     // #region fields
-    // static NumCurrentRoom = 10;
+    ArryExits = [];
     // #endregion
 
     // // #region constructors
-    constructor(){
+    constructor(numCurrentRoom){
         super();
-        // this.NumCurrentRoom;
+        this.NumCurrentRoom = numCurrentRoom;
         this.ArryContents;
         this.ArryExits;
     }

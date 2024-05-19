@@ -26,7 +26,3 @@ export default class Player extends Creature{
     toggleFireMode(){}
     // #endregion
 }
-
-const player = new Player();
-// player.NumCurrentRoom = "b";
-console.log(player.NumCurrentRoom);
