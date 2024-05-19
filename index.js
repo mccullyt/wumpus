@@ -11,6 +11,8 @@ player.NumCurrentRoom = 22;
 
 const room = [];
 
+
+// This for loop creates room with exit values derived from path values from paths.json.
 for( var i = 1; i < 21; i++){
     
    let newRoom = new Room(i);
@@ -20,32 +22,43 @@ for( var i = 1; i < 21; i++){
     room.push(newRoom);
 }
 
+// This foreach loop takes the exit values derived from the json file and replaces them with pointers to rooms in the room array.
+// I subtract 1 from the number provided by the json file to match the room array indexing starting at 0 instead of 1.
 room.forEach(element => {
-    console.log(element.NumCurrentRoom);
-    console.log(element);
-    console.log("pathA: "+element.ArryExits[0])
-    console.log("pathB: "+element.ArryExits[2])
-    console.log("pathC: "+element.ArryExits[1])
-    let pathA = element.ArryExits[0]-1;
-    console.log("pathA: "+pathA)
-    let pathB = element.ArryExits[1]-1;
-    console.log("pathB: "+pathB)
-    let pathC = element.ArryExits[2]-1;
-    console.log("pathC: "+pathC)
-    element.ArryExits[0] = room[pathA];
-    element.ArryExits[1] = room[pathB];
-    element.ArryExits[2] = room[pathC];
-    console.log(element);
+    let debug = false;
+    let pathA;
+    let pathB;
+    let pathC
+    switch(debug){
+        case true:
+            console.log(element.NumCurrentRoom);
+            console.log(element);
+            console.log("pathA: "+element.ArryExits[0])
+            console.log("pathB: "+element.ArryExits[2])
+            console.log("pathC: "+element.ArryExits[1])
+            pathA = element.ArryExits[0]-1;
+            console.log("pathA: "+pathA)
+            pathB = element.ArryExits[1]-1;
+            console.log("pathB: "+pathB)
+            pathC = element.ArryExits[2]-1;
+            console.log("pathC: "+pathC)
+            element.ArryExits[0] = room[pathA];
+            element.ArryExits[1] = room[pathB];
+            element.ArryExits[2] = room[pathC];
+            console.log(element);
+            break;
+        default:
+            pathA = element.ArryExits[0]-1;
+            pathB = element.ArryExits[1]-1;
+            pathC = element.ArryExits[2]-1;
+            element.ArryExits[0] = room[pathA];
+            element.ArryExits[1] = room[pathB];
+            element.ArryExits[2] = room[pathC];
+            break;
+    }
+    
 });
 
-// for(var i = 0; i <20; i++){
-//     let pathA = room[i].ArryExits[0];
-//     console.log("PathA: "+pathA);
-//     let pathB = room[i].ArryExits[1];
-//     console.log("PathB: "+pathB);
-//     let pathC = room[i].ArryExits[2];
-//     console.log("PathC: "+pathC);
-// }
 
 
 // room[0].ArryExits.push(paths.room[0].pathA)
@@ -55,8 +68,8 @@ room.forEach(element => {
 // console.table(room[0]);
 // console.table(room[1]);
 // console.table(room[2]);
-console.log(room);
-console.log(room[2]);
+// console.log(room);
+// console.log(room[2]);
 
 
 
