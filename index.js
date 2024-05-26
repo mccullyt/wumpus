@@ -30,7 +30,7 @@ for( var i = 1; i < 21; i++){
 
 
 for(var i = 1; i < 21; i++){
-    let debug = true;
+    let debug = false;
     let pathA;
     let pathB;
     let pathC;
@@ -74,7 +74,27 @@ let mapObject = document.getElementById("layer1");
 let svgRooms = mapObject.getElementsByTagName('path');
 
 
-console.log(room);
+let x = 8;
+
+
+
+// Each room in the svg has an id of room##. This for loop makes each room green. 
+// for(var i = 1; i <21; i++){
+    
+//     let testRoom = document.getElementById("room"+i);
+//     console.log(i);
+//     console.log(testRoom)
+//     testRoom.style.fill="green";
+// }
+
+let xyz = true;
+let paragraph=document.getElementById('test');
+while(xyz){paragraph.innerHTML="true"}
+paragraph.innerHTML='false'
+
+
+
+
 
 // console.log(mapObject);
 
