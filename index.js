@@ -5,6 +5,7 @@ import paths from './paths.json' with { type: 'json' };
 
 const player = new Player();
 player.NumCurrentRoom = 22;
+console.log(player.NumCurrentRoom);
 
 // let paragraph = document.getElementById("test");
 // console.log(paragraph.innerHTML)
@@ -25,41 +26,31 @@ for( var i = 1; i < 21; i++){
 
 // This foreach loop takes the exit values derived from the json file and replaces them with pointers to rooms in the room array.
 // I subtract 1 from the number provided by the json file to match the room array indexing starting at 0 instead of 1.
-
-
-
-
 for(var i = 1; i < 21; i++){
-    let debug = false;
+    let isDebug = true;
     let pathA;
     let pathB;
     let pathC;
     let element = room[i];
-    switch(debug){    
+    
+    
+    pathA = element.ArryExits[0];
+    pathB = element.ArryExits[1];
+    pathC = element.ArryExits[2];
+
+    element.ArryExits[0] = room[pathA];
+    element.ArryExits[1] = room[pathB];
+    element.ArryExits[2] = room[pathC];
+    switch(isDebug){    
         case true:
             console.log(element.NumCurrentRoom);
-            console.log(element);
-            console.log("value pathA: "+element.ArryExits[0])
-            console.log("value pathB: "+element.ArryExits[1])
-            console.log("value pathC: "+element.ArryExits[2])
-            pathA = element.ArryExits[0];
+            console.log("value pathA: "+element.ArryExits[0].NumCurrentRoom)
+            console.log("value pathB: "+element.ArryExits[1].NumCurrentRoom)
+            console.log("value pathC: "+element.ArryExits[2].NumCurrentRoom)
             console.log("object pointer pathA: "+pathA)
-            pathB = element.ArryExits[1];
             console.log("object pointer pathB: "+pathB)
-            pathC = element.ArryExits[2];
             console.log("object pointer pathC: "+pathC)
-            element.ArryExits[0] = room[pathA];
-            element.ArryExits[1] = room[pathB];
-            element.ArryExits[2] = room[pathC];
             console.log(element);
-            break;
-        default:
-            pathA = element.ArryExits[0];
-            pathB = element.ArryExits[1];
-            pathC = element.ArryExits[2];
-            element.ArryExits[0] = room[pathA];
-            element.ArryExits[1] = room[pathB];
-            element.ArryExits[2] = room[pathC];
             break;
     }
 
@@ -76,21 +67,33 @@ let svgRooms = mapObject.getElementsByTagName('path');
 
 let x = 8;
 
+console.log(x);
+
 
 
 // Each room in the svg has an id of room##. This for loop makes each room green. 
-// for(var i = 1; i <21; i++){
+for(var i = 1; i <21; i++){
     
-//     let testRoom = document.getElementById("room"+i);
-//     console.log(i);
-//     console.log(testRoom)
-//     testRoom.style.fill="green";
-// }
+    let isDebug = false;
 
-let xyz = true;
-let paragraph=document.getElementById('test');
-while(xyz){paragraph.innerHTML="true"}
-paragraph.innerHTML='false'
+    let testRoom = document.getElementById("room"+i);
+    switch(isDebug){
+        case true:
+            console.log(i);
+            console.log(testRoom)
+            break;
+        
+
+    }
+    testRoom.style.fill="green";
+    
+    
+}
+
+// let xyz = true;
+// let paragraph=document.getElementById('test');
+// while(xyz){paragraph.innerHTML="true"}
+// paragraph.innerHTML='false'
 
 
 
