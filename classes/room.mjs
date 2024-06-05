@@ -12,6 +12,27 @@ export default class room extends Thing {
         this.ArryContents;
         this.ArryExits;
     }
-    #endregion
+    //#endregion
+
+    // #region methods
+
+    displayExitsToConsole(){
+        let returnValue = "Paths A - C:\n";
+        this.ArryExits.forEach(exit => {
+            switch(typeof exit){
+                case 'string':
+                    returnValue += `\tString Value: ${exit} \n`;
+                    break;
+                case 'object':
+                    returnValue += `\tRoom Object Ref: ${exit.NumCurrentRoom}\n`;
+                    break;
+
+            }
+            // returnValue += exit.NumCurrentRoom + " ";
+        });
+        return returnValue
+    }
+
+    // #endregion
 
 }
