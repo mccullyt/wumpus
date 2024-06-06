@@ -4,8 +4,8 @@ import Room from '/classes/room.mjs'
 import paths from './paths.json' with { type: 'json' };
 
 const player = new Player();
-player.NumCurrentRoom = 22;
-console.log(player.NumCurrentRoom);
+// player.NumCurrentRoom = 22;
+// console.log(player.NumCurrentRoom);
 
 // #region Create Dummy Room
 const room = [new Room(0)];
@@ -63,20 +63,16 @@ for(var i = 1; i < 21; i++){
 // #endregion
 
 
-let mapObject = document.getElementById("layer1");
-
-let svgRooms = mapObject.getElementsByTagName('path');
 
 
-let x = 8;
 
-console.log(x);
 
 
 // #region ColorAllRooms
 // Each room in the svg has an id of room##. This for loop replaces the ## with i. 
 for(var i = 1; i <21; i++){
-    
+    let mapObject = document.getElementById("layer1");
+    let svgRooms = mapObject.getElementsByTagName('path');
     let isDebug = false;
 
     let testRoom = document.getElementById("room"+i);
@@ -94,6 +90,58 @@ for(var i = 1; i <21; i++){
 // #endregion
 
 
+// #region checkRoomForPlayer
+// Below should check all the ArryContents each room for the entity until the entity is found and then return the index of the room where the entity was found.
+
+room[10].addEntity(player);
+console.log(room[10]);
+updateRoomColor(player);
+
+function checkRoomsFor(entity){
+    let isDebug = false;
+    let debugLog = "";
+    let index = 0;
+    
+    for(var i = 1; i < 21; i++){
+        let currentRoom = room[i];
+        debugLog = `Searching for above entity in room: ${i}.\n`
+        
+        switch(currentRoom.ArryContents.indexOf(entity)){
+            case -1:
+                debugLog += `\tEntity not found in room ${i}\n`;
+                break;
+            default:
+                debugLog+=`Entity found in room ${i}.`;
+                // return true;
+                index = i
+                break;
+        }
+
+        switch(isDebug){
+            case true:
+                console.log(entity);
+                console.log(debugLog)
+        }
+    }
+    return index;
+}
+
+
+
+
+
+// #endregion
+
+
+
+// #region updateRoomColor()
+// This function is supposed to change the color of a room based on if the player is in it
+function updateRoomColor(){
+    let index = checkRoomsFor(player);
+    let targetRoom = document.getElementById("room"+index);
+    targetRoom.style.fill = "skyblue";
+}
+// #endregion
 
 // console.log(mapObject);
 

@@ -3,6 +3,7 @@ import Thing from './thing.mjs'
 export default class room extends Thing {
     // #region fields
     ArryExits = [];
+    ArryContents = [];
     // #endregion
 
     // // #region constructors
@@ -15,6 +16,14 @@ export default class room extends Thing {
     //#endregion
 
     // #region methods
+
+    addEntity(entity){
+        this.ArryContents.push(entity);
+    }
+    removeEntity(entity){
+        let index = this.ArryContents.indexOf(entity);
+        this.ArryContents.splice(index);
+    }
 
     displayExitsToConsole(){
         let returnValue = "Paths A - C:\n";
