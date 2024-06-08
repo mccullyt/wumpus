@@ -1,14 +1,21 @@
-#path3159{
-    fill: black !important;
+
+
+
+.menu-container{
+    background-color: aquamarine;
     
 }
 
+.menu-row{
+    display:flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
 
-/* object  #document{
-    background-color: blueviolet;
-} */
+.menu-item{
+    background-color: pink;
+}
 
-
-g{
-    background-color: blueviolet;
+.menu-item:hover{
+    background-color: brown;
 }

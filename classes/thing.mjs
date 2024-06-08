@@ -2,7 +2,7 @@
 
 export default class Thing{
     // #region fields
-    static NumCurrentRoom = 100;
+    static id = 100;
 
     // #endregion
 

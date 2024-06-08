@@ -4,11 +4,11 @@ import Room from '/classes/room.mjs'
 import paths from './paths.json' with { type: 'json' };
 
 const player = new Player();
-// player.NumCurrentRoom = 22;
-// console.log(player.NumCurrentRoom);
+// player.id = 22;
+// console.log(player.id);
 
 // #region Create Dummy Room
-const room = [new Room(0)];
+const rooms = [new Room(0)];
 // endregion
 
 // #region createRooms
@@ -18,9 +18,77 @@ for( var i = 1; i < 21; i++){
     newRoom.ArryExits.push(paths.room[i-1].pathA); //I subtract 1 to keep i aligned with num objects in paths.json
     newRoom.ArryExits.push(paths.room[i-1].pathB);
     newRoom.ArryExits.push(paths.room[i-1].pathC);
-    room.push(newRoom);
+    rooms.push(newRoom);
 }
 // #endregion
+
+// #region menu Items??
+let menuItem1 = document.getElementById("menu-item-1");
+let menuItem2 = document.getElementById("menu-item-2");
+let menuItem3 = document.getElementById("menu-item-3");
+let menuItem4 = document.getElementById("menu-item-4");
+let menuItem5 = document.getElementById("menu-item-5");
+let menuItem6 = document.getElementById("menu-item-6");
+
+menuItem1.addEventListener("click", function () {
+    pushEntityThroughPath(player,'a');
+
+});
+menuItem2.addEventListener("click", function () {
+    pushEntityThroughPath(player,'b');
+
+});
+menuItem3.addEventListener("click", function () {
+    pushEntityThroughPath(player,'c');
+
+});
+
+menuItem5.addEventListener("click", function () {displayPlayersRoom();});
+// #endregion
+
+
+player.CurrentRoom = rooms[10];
+function displayPlayersRoom(){
+    console.log(player.CurrentRoom);
+}
+
+function convertPathToIndex(path){
+    let index = 
+        path == ('a' || 'A') ? 0
+        : path == ('b' || 'B')? 1
+        : path == ('c' || 'C')? 2
+        : -1;
+    return index;
+}
+
+
+function pushEntityThroughPath(entity,path){
+    console.log(path);
+    path = convertPathToIndex(path);
+    console.log(path);
+    let currentRoom = entity.CurrentRoom;
+    let NextRoom=currentRoom.ArryExits[path];
+    NextRoom.addEntity(entity);
+    currentRoom.removeEntity(entity);
+    currentRoom.Color="grey"
+    NextRoom.Color="blue"
+    entity.CurrentRoom=NextRoom;
+    colorAllRooms();
+    updatePathButtons();
+}
+
+function updatePathButtons(){
+    let pathA = document.getElementById('menu-item-1');
+    let pathB = document.getElementById('menu-item-2');
+    let pathC = document.getElementById('menu-item-3');
+    pathA.innerHTML=player.CurrentRoom.ArryExits[0].id;
+    pathB.innerHTML=player.CurrentRoom.ArryExits[1].id;
+    pathC.innerHTML=player.CurrentRoom.ArryExits[2].id;
+    
+
+}
+
+updatePathButtons()
 
 // #region ReplaceRoomStringsWithRefs
 // This for loop takes the exit string values derived from the json file and replaces them with pointers to rooms in the room array.
@@ -31,11 +99,11 @@ for(var i = 1; i < 21; i++){
     let pathA;
     let pathB;
     let pathC;
-    let element = room[i];
+    let element = rooms[i];
     let debugLog="";
 
         
-    debugLog+=`Room: ${element.NumCurrentRoom}\n`;
+    debugLog+=`Room: ${element.id}\n`;
                 
     debugLog+="Deriving string values to be converted into references\n";
     
@@ -47,9 +115,9 @@ for(var i = 1; i < 21; i++){
             
     debugLog+="Assigning Room Object Refs \n"
 
-    element.ArryExits[0] = room[pathA];
-    element.ArryExits[1] = room[pathB];
-    element.ArryExits[2] = room[pathC];
+    element.ArryExits[0] = rooms[pathA];
+    element.ArryExits[1] = rooms[pathB];
+    element.ArryExits[2] = rooms[pathC];
         
     debugLog+=`\t${element.displayExitsToConsole()}\n`
             
@@ -63,38 +131,26 @@ for(var i = 1; i < 21; i++){
 // #endregion
 
 
-
-
-
-
-
 // #region ColorAllRooms
-// Each room in the svg has an id of room##. This for loop replaces the ## with i. 
-for(var i = 1; i <21; i++){
-    let mapObject = document.getElementById("layer1");
-    let svgRooms = mapObject.getElementsByTagName('path');
-    let isDebug = false;
 
-    let testRoom = document.getElementById("room"+i);
-
-    testRoom.style.fill="grey";
-    
-    switch(isDebug){
-        case true:
-            console.log(`Room: ${i}`);
-            console.log(testRoom);
-            break;
-    }
-    
+function colorAllRooms(){
+    rooms.forEach((room) => room.updateMapNodeColor());   
 }
+
+
+
+
 // #endregion
+
+
 
 
 // #region checkRoomForPlayer
 // Below should check all the ArryContents each room for the entity until the entity is found and then return the index of the room where the entity was found.
 
-room[10].addEntity(player);
-console.log(room[10]);
+rooms[10].addEntity(player);
+console.log(rooms[10]);
+console.log(rooms[10].checkContentsFor(player));
 updateRoomColor(player);
 
 function checkRoomsFor(entity){
@@ -103,7 +159,7 @@ function checkRoomsFor(entity){
     let index = 0;
     
     for(var i = 1; i < 21; i++){
-        let currentRoom = room[i];
+        let currentRoom = rooms[i];
         debugLog = `Searching for above entity in room: ${i}.\n`
         
         switch(currentRoom.ArryContents.indexOf(entity)){

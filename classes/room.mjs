@@ -4,14 +4,17 @@ export default class room extends Thing {
     // #region fields
     ArryExits = [];
     ArryContents = [];
+    Color = "grey";
+    mapNode = "";
     // #endregion
 
     // // #region constructors
-    constructor(numCurrentRoom){
+    constructor(id){
         super();
-        this.NumCurrentRoom = numCurrentRoom;
+        this.id = id;
         this.ArryContents;
         this.ArryExits;
+        this.mapNode = document.getElementById("room"+this.id);
     }
     //#endregion
 
@@ -20,9 +23,21 @@ export default class room extends Thing {
     addEntity(entity){
         this.ArryContents.push(entity);
     }
+
+    checkContentsFor(entity){
+        return this.ArryContents.indexOf(entity);
+        
+    }
+
     removeEntity(entity){
-        let index = this.ArryContents.indexOf(entity);
-        this.ArryContents.splice(index);
+        // let indexOfEntity = this.ArryContents.indexOf(entity);
+        let indexOfEntity = this.checkContentsFor(entity);
+        this.ArryContents.splice(indexOfEntity);
+    }
+
+    updateMapNodeColor(){
+        try{this.mapNode.style.fill=this.Color;} 
+        catch(e) { console.log(e);}
     }
 
     displayExitsToConsole(){
@@ -33,11 +48,11 @@ export default class room extends Thing {
                     returnValue += `\tString Value: ${exit} \n`;
                     break;
                 case 'object':
-                    returnValue += `\tRoom Object Ref: ${exit.NumCurrentRoom}\n`;
+                    returnValue += `\tRoom Object Ref: ${exit.id}\n`;
                     break;
 
             }
-            // returnValue += exit.NumCurrentRoom + " ";
+            // returnValue += exit.id + " ";
         });
         return returnValue
     }
