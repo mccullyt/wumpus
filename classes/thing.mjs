@@ -14,6 +14,8 @@ export default class Thing{
     //#endregion
 
     // #region Methods
-
+    getClassName() {
+        return this.constructor.name;
+    }
     // #endregion
 }

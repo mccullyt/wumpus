@@ -29,6 +29,16 @@ export default class room extends Thing {
         
     }
 
+    checkForCollision(arryEntities){
+        
+        // only worry about collisions with player so itd be player vs xyz
+        // if contents contains player
+            // player vs wumpus 
+            // player vs bat
+            // player vs pit
+            // player vs arrows
+    }
+
     removeEntity(entity){
         // let indexOfEntity = this.ArryContents.indexOf(entity);
         let indexOfEntity = this.checkContentsFor(entity);
@@ -52,10 +62,11 @@ export default class room extends Thing {
                     break;
 
             }
-            // returnValue += exit.id + " ";
         });
-        return returnValue
+        return returnValue;
     }
+
+    
 
     // #endregion
 

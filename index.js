@@ -10,8 +10,11 @@ const rooms = [new Room(0)];    //dummy room is created because the json paths f
 createRooms();
 replaceRoomStringsWithRefs();
 createMenu();
-player.CurrentRoom = rooms[10];
-
+player.CurrentRoom = rooms[1];
+rooms[1].Color ="skyblue";
+colorAllRooms();
+console.log(player.getClassName());
+console.log(rooms[1].getClassName());
 // #endregion
 
 
@@ -170,23 +173,6 @@ function checkRoomsFor(entity){
 
 
 
-
-
-
-
-
-// #region updateRoomColor()
-// This function is supposed to change the color of a room based on if the player is in it
-function updateRoomColor(){
-    let index = checkRoomsFor(player);
-    let targetRoom = document.getElementById("room"+index);
-    targetRoom.style.fill = "skyblue";
-}
-// #endregion
-
-// console.log(mapObject);
-
-// console.log(svgRooms);
 
 
 

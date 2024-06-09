@@ -3,6 +3,7 @@
 
 .menu-container{
     background-color: aquamarine;
+    margin-top: 10px;
     
 }
 
@@ -14,8 +15,36 @@
 
 .menu-item{
     background-color: pink;
+    flex-basis: 100px;
+    text-align: center;
 }
 
 .menu-item:hover{
+    background-color: brown;
+}
+
+
+
+/*  */
+
+.stats-container{
+    background-color: skyblue;
+    margin-top: 10px;
+    
+}
+
+.stats-row{
+    display:flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.stats-item{
+    background-color: lightgrey;
+    flex-basis: 100px;
+    text-align: center;
+}
+
+.stats-item:hover{
     background-color: brown;
 }
