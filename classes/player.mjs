@@ -11,11 +11,11 @@ export default class Player extends Creature{
     // // #region constructors
     constructor(){
         super();
-        this.CurrentRoom;
-        this.NumCurrentRoom;
-        this.NumArrows = 10;
-        this.IsAlive = true
-        this.IsFireModeOn = false
+        this.currentRoom;
+        this.numCurrentRoom;
+        this.numArrows = 10;
+        this.isAlive = true
+        this.isFireModeOn = false
     }
     #endregion
 

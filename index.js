@@ -1,4 +1,4 @@
-import Player from '/classes/Player.mjs'
+import Player from '/classes/player.mjs'
 import GameMaster from '/classes/gameMaster.mjs'
 import Room from '/classes/room.mjs'
 import paths from './paths.json' with { type: 'json' };
@@ -10,8 +10,8 @@ const rooms = [new Room(0)];    //dummy room is created because the json paths f
 createRooms();
 replaceRoomStringsWithRefs();
 createMenu();
-player.CurrentRoom = rooms[1];
-rooms[1].Color ="skyblue";
+player.currentRoom = rooms[1];
+rooms[1].color ="skyblue";
 colorAllRooms();
 console.log(player.getClassName());
 console.log(rooms[1].getClassName());
@@ -49,9 +49,9 @@ function updatePathButtons(){
     let pathA = document.getElementById('menu-item-1');
     let pathB = document.getElementById('menu-item-2');
     let pathC = document.getElementById('menu-item-3');
-    pathA.innerHTML=player.CurrentRoom.ArryExits[0].id;
-    pathB.innerHTML=player.CurrentRoom.ArryExits[1].id;
-    pathC.innerHTML=player.CurrentRoom.ArryExits[2].id;
+    pathA.innerHTML=player.currentRoom.arryExits[0].id;
+    pathB.innerHTML=player.currentRoom.arryExits[1].id;
+    pathC.innerHTML=player.currentRoom.arryExits[2].id;
 }
 
 // #endregion
@@ -61,15 +61,15 @@ function createRooms(){
     // This for loop creates room with exit values derived from string values from paths.json.
     for( var i = 1; i < 21; i++){
         let newRoom = new Room(i);
-         newRoom.ArryExits.push(paths.room[i-1].pathA); //I subtract 1 to keep i aligned with num objects in paths.json
-         newRoom.ArryExits.push(paths.room[i-1].pathB);
-         newRoom.ArryExits.push(paths.room[i-1].pathC);
+         newRoom.arryExits.push(paths.room[i-1].pathA); //I subtract 1 to keep i aligned with num objects in paths.json
+         newRoom.arryExits.push(paths.room[i-1].pathB);
+         newRoom.arryExits.push(paths.room[i-1].pathC);
          rooms.push(newRoom);
      }
 }
 
 function displayPlayersRoom(){
-    console.log(player.CurrentRoom);
+    console.log(player.currentRoom);
 }
 
 function convertPathToIndex(path){
@@ -86,13 +86,13 @@ function pushEntityThroughPath(entity,path){
     console.log(path);
     path = convertPathToIndex(path);
     console.log(path);
-    let currentRoom = entity.CurrentRoom;
-    let NextRoom=currentRoom.ArryExits[path];
-    NextRoom.addEntity(entity);
+    let currentRoom = entity.currentRoom;
+    let nextRoom=currentRoom.arryExits[path];
+    nextRoom.addEntity(entity);
     currentRoom.removeEntity(entity);
-    currentRoom.Color="grey"
-    NextRoom.Color="skyblue"
-    entity.CurrentRoom=NextRoom;
+    currentRoom.color="grey"
+    nextRoom.color="skyblue"
+    entity.currentRoom = nextRoom;
     colorAllRooms();
     updatePathButtons();
 }
@@ -112,17 +112,17 @@ function replaceRoomStringsWithRefs(){
                     
         debugLog+="Deriving string values to be converted into references\n";
         
-        pathA = element.ArryExits[0];
-        pathB = element.ArryExits[1];
-        pathC = element.ArryExits[2];
+        pathA = element.arryExits[0];
+        pathB = element.arryExits[1];
+        pathC = element.arryExits[2];
         
         debugLog+=`\t${element.displayExitsToConsole()}\n`
                 
         debugLog+="Assigning Room Object Refs \n"
     
-        element.ArryExits[0] = rooms[pathA];
-        element.ArryExits[1] = rooms[pathB];
-        element.ArryExits[2] = rooms[pathC];
+        element.arryExits[0] = rooms[pathA];
+        element.arryExits[1] = rooms[pathB];
+        element.arryExits[2] = rooms[pathC];
             
         debugLog+=`\t${element.displayExitsToConsole()}\n`
                 

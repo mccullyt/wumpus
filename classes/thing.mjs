@@ -2,14 +2,14 @@
 
 export default class Thing{
     // #region fields
-    static id = 100;
+    
 
     // #endregion
 
     // #region constructors
     constructor(){
         // this.NumCurrentRoom;
-        this.NumCurrentRoom;
+        this.numCurrentRoom;
     }
     //#endregion
 

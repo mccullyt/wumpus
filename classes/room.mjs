@@ -2,9 +2,9 @@ import Thing from './thing.mjs'
 
 export default class room extends Thing {
     // #region fields
-    ArryExits = [];
-    ArryContents = [];
-    Color = "grey";
+    arryExits = [];
+    arryContents = [];
+    color = "grey";
     mapNode = "";
     // #endregion
 
@@ -12,8 +12,8 @@ export default class room extends Thing {
     constructor(id){
         super();
         this.id = id;
-        this.ArryContents;
-        this.ArryExits;
+        this.arryContents;
+        this.arryExits;
         this.mapNode = document.getElementById("room"+this.id);
     }
     //#endregion
@@ -21,11 +21,11 @@ export default class room extends Thing {
     // #region methods
 
     addEntity(entity){
-        this.ArryContents.push(entity);
+        this.arryContents.push(entity);
     }
 
     checkContentsFor(entity){
-        return this.ArryContents.indexOf(entity);
+        return this.arryContents.indexOf(entity);
         
     }
 
@@ -42,17 +42,17 @@ export default class room extends Thing {
     removeEntity(entity){
         // let indexOfEntity = this.ArryContents.indexOf(entity);
         let indexOfEntity = this.checkContentsFor(entity);
-        this.ArryContents.splice(indexOfEntity);
+        this.arryContents.splice(indexOfEntity);
     }
 
     updateMapNodeColor(){
-        try{this.mapNode.style.fill=this.Color;} 
+        try{this.mapNode.style.fill=this.color;} 
         catch(e) { console.log(e);}
     }
 
     displayExitsToConsole(){
         let returnValue = "Paths A - C:\n";
-        this.ArryExits.forEach(exit => {
+        this.arryExits.forEach(exit => {
             switch(typeof exit){
                 case 'string':
                     returnValue += `\tString Value: ${exit} \n`;
