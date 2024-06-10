@@ -1,3 +1,4 @@
+import Arrow from '/classes/arrow.mjs'
 import Player from '/classes/player.mjs'
 import GameMaster from '/classes/gameMaster.mjs'
 import Room from '/classes/room.mjs'
@@ -17,7 +18,7 @@ console.log(player.getClassName());
 console.log(rooms[1].getClassName());
 // #endregion
 
-
+console.log(player.numArrows);
 
 
 
@@ -32,14 +33,17 @@ function createMenu(){
     var menuItem6 = document.getElementById("menu-item-6");
     menuItem1.addEventListener("click", function () {
         pushEntityThroughPath(player,'a');
+        updateStats();
     
     });
     menuItem2.addEventListener("click", function () {
         pushEntityThroughPath(player,'b');
+        updateStats();
     
     });
     menuItem3.addEventListener("click", function () {
         pushEntityThroughPath(player,'c');
+        updateStats();
     
     });
     
@@ -52,6 +56,14 @@ function updatePathButtons(){
     pathA.innerHTML=player.currentRoom.arryExits[0].id;
     pathB.innerHTML=player.currentRoom.arryExits[1].id;
     pathC.innerHTML=player.currentRoom.arryExits[2].id;
+}
+
+function updateStats(){
+    let arrows = document.getElementById('item-1');
+    let alive = document.getElementById('item-2');
+    let something = document.getElementById('item-3');
+    arrows.innerHTML=`Arrows: ${player.numArrows}`;
+    
 }
 
 // #endregion
@@ -95,6 +107,7 @@ function pushEntityThroughPath(entity,path){
     entity.currentRoom = nextRoom;
     colorAllRooms();
     updatePathButtons();
+    nextRoom.checkForCollisions();
 }
 function replaceRoomStringsWithRefs(){
     // This for loop takes the exit string values derived from the json file and replaces them with pointers to rooms in the room array.

@@ -6,6 +6,7 @@ import Creature from './creature.mjs'
 export default class Player extends Creature{
     // #region fields
     // static NumCurrentRoom = 10;
+    numArrows = 0;
     // #endregion
 
     // // #region constructors

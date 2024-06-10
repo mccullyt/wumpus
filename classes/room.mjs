@@ -29,7 +29,7 @@ export default class room extends Thing {
         
     }
 
-    checkForCollision(arryEntities){
+    checkForCollisions(){
         
         // only worry about collisions with player so itd be player vs xyz
         // if contents contains player
@@ -37,6 +37,8 @@ export default class room extends Thing {
             // player vs bat
             // player vs pit
             // player vs arrows
+
+            // if(this.arryContents[0]=player){console.log("yipyipyip");}
     }
 
     removeEntity(entity){
