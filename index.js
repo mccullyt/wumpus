@@ -9,27 +9,28 @@ import paths from './paths.json' with { type: 'json' };
 const player = new Player();
 const rooms = [new Room(0)];    //dummy room is created because the json paths file starts at 1 instead of 0. This should keep me from having to -1 from a lot of stuff.
 const testArrow = new Arrow();
-const lethalTestArrow = new Arrow();
-testArrow.lethal=false;
 createRooms();
 replaceRoomStringsWithRefs();
 createMenu();
 player.currentRoom = rooms[1];
 rooms[1].addEntity(player);
+rooms[1].addEntity(new Arrow());
 rooms[1].color ="skyblue";
-rooms[2].addEntity(testArrow);
-rooms[5].addEntity(lethalTestArrow);
+rooms[2].addEntity(new Arrow);
 colorAllRooms();
 updatePathButtons();
 updateStats();
+console.log(rooms[1].checkContentsForType('Arrow'));
+console.log(rooms[1].getIndexOfType('Arrow'));
 
+console.log(rooms[1].checkContentsForType('Player'));
+console.log(rooms[1].getIndexOfType('Player'));
 
 
 console.log(player.getClassName());
 console.log(rooms[1].getClassName());
 // #endregion
 
-console.log(player.numArrows);
 
 
 
@@ -45,19 +46,19 @@ function createMenu(){
     var menuItem7 = document.getElementById("menu-item-7");
     menuItem1.addEventListener("click", function () {
         pushEntityThroughPath(player,'a');
-        checkForEntityCollisions(player.currentRoom);
+        checkForArrowCollision(player.currentRoom);
         updateStats();
     
     });
     menuItem2.addEventListener("click", function () {
         pushEntityThroughPath(player,'b');
-        checkForEntityCollisions(player.currentRoom);
+        checkForArrowCollision(player.currentRoom);
         updateStats();
     
     });
     menuItem3.addEventListener("click", function () {
         pushEntityThroughPath(player,'c');
-        checkForEntityCollisions(player.currentRoom);
+        checkForArrowCollision(player.currentRoom);
         updateStats();
     
     });
@@ -128,7 +129,7 @@ function pushEntityThroughPath(entity,path){
     entity.currentRoom = nextRoom;
     colorAllRooms();
     updatePathButtons();
-    nextRoom.checkForCollisions();
+    // nextRoom.checkForCollisions();
 }
 function replaceRoomStringsWithRefs(){
     // This for loop takes the exit string values derived from the json file and replaces them with pointers to rooms in the room array.
@@ -174,19 +175,19 @@ function colorAllRooms(){
 }
 
 
-function checkForEntityCollisions(room){
-    room.arryContents.forEach(entity => {
+function checkForArrowCollision(room){
+    // room.arryContents.forEach(entity => {
         
-        if(entity.getClassName() == 'arrow' ){
-            console.log('!!!found an arrow!!!');
-            if(entity.lethal){player.alive=false;}
-            else{player.arrows++;}
-        }
-    });
-}
+    //     if(entity.getClassName() == 'arrow' ){
+    //         console.log('!!!found an arrow!!!');
+    //         if(entity.lethal){player.isAlive=false;}
+    //         else{player.numArrows++;}
+    //     }
+    // });
 
-// rooms[1].checkForCollisions(player);
-// console.log(player.numArrows);
+
+
+}
 
 // Below should check all the arryContents each room for the entity until the entity is found and then return the index of the room where the entity was found.
 function checkRoomsFor(entity){

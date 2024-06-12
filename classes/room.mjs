@@ -24,32 +24,39 @@ export default class room extends Thing {
         this.arryContents.push(entity);
     }
 
-    checkContentsFor(entity){
+    getContentsIndexOf(entity){
         return this.arryContents.indexOf(entity);
         
     }
 
-    checkForCollisions(arryEntities){
-        // the arrEntites should only contain references to the objects put into it.
-        // I only need to know the type of an object if there is a collision
-        // only worry about collisions with player so itd be player vs xyz
-        // if contents contains player
-            // player vs wumpus 
-            // player vs bat
-            // player vs pit
-            // player vs arrows
-        
-        // console.log(arryEntities.numArrows);
-        // arryEntities.numArrows=5;
-        // console.log(this.arryContents);
-        // if(arryEntities=this.arryContents[0]){console.log(true);}
-        
-        // if(this.arryContents[0]=player){console.log("yipyipyip");}
+    getIndexOfType(className){
+        for (let index = 0; index < this.arryContents.length; index++) {
+            const entity = this.arryContents[index];
+            if(entity.getClassName()==className){return index;}
+        }
+        return -1;
+    }
+
+    checkContentsFor(entity){
+        let entityFound = (this.arryContents.indexOf(entity) != -1);
+        return entityFound;
+    }
+
+    checkContentsForType(className){
+        let typeFound = (this.getIndexOfType(className) != -1);
+        return typeFound;
+    }
+    
+
+    checkForCollision(entityA,entityB){
+        let collisionFound = false;
+        collisionFound = this.checkContentsFor(entityA) && this.checkContentsFor(entityB);
+        return collisionFound;
     }
 
     removeEntity(entity){
         // let indexOfEntity = this.ArryContents.indexOf(entity);
-        let indexOfEntity = this.checkContentsFor(entity);
+        let indexOfEntity = this.getContentsIndexOf(entity);
         this.arryContents.splice(indexOfEntity);
     }
 

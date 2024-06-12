@@ -1,6 +1,6 @@
 import Thing from './thing.mjs'
 
-export default class arrow extends Thing {
+export default class Arrow extends Thing {
     // #region fields
     lethal = true;
     // static NumCurrentRoom = 10;
