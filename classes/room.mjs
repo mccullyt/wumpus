@@ -29,16 +29,22 @@ export default class room extends Thing {
         
     }
 
-    checkForCollisions(){
-        
+    checkForCollisions(arryEntities){
+        // the arrEntites should only contain references to the objects put into it.
+        // I only need to know the type of an object if there is a collision
         // only worry about collisions with player so itd be player vs xyz
         // if contents contains player
             // player vs wumpus 
             // player vs bat
             // player vs pit
             // player vs arrows
-
-            // if(this.arryContents[0]=player){console.log("yipyipyip");}
+        
+        // console.log(arryEntities.numArrows);
+        // arryEntities.numArrows=5;
+        // console.log(this.arryContents);
+        // if(arryEntities=this.arryContents[0]){console.log(true);}
+        
+        // if(this.arryContents[0]=player){console.log("yipyipyip");}
     }
 
     removeEntity(entity){

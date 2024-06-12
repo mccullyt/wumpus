@@ -8,12 +8,23 @@ import paths from './paths.json' with { type: 'json' };
 // #region intial setup
 const player = new Player();
 const rooms = [new Room(0)];    //dummy room is created because the json paths file starts at 1 instead of 0. This should keep me from having to -1 from a lot of stuff.
+const testArrow = new Arrow();
+const lethalTestArrow = new Arrow();
+testArrow.lethal=false;
 createRooms();
 replaceRoomStringsWithRefs();
 createMenu();
 player.currentRoom = rooms[1];
+rooms[1].addEntity(player);
 rooms[1].color ="skyblue";
+rooms[2].addEntity(testArrow);
+rooms[5].addEntity(lethalTestArrow);
 colorAllRooms();
+updatePathButtons();
+updateStats();
+
+
+
 console.log(player.getClassName());
 console.log(rooms[1].getClassName());
 // #endregion
@@ -31,6 +42,7 @@ function createMenu(){
     var menuItem4 = document.getElementById("menu-item-4");
     var menuItem5 = document.getElementById("menu-item-5");
     var menuItem6 = document.getElementById("menu-item-6");
+    var menuItem7 = document.getElementById("menu-item-7");
     menuItem1.addEventListener("click", function () {
         pushEntityThroughPath(player,'a');
         updateStats();
@@ -38,6 +50,7 @@ function createMenu(){
     });
     menuItem2.addEventListener("click", function () {
         pushEntityThroughPath(player,'b');
+        checkForEntityCollisions(player.currentRoom);
         updateStats();
     
     });
@@ -48,6 +61,8 @@ function createMenu(){
     });
     
     menuItem5.addEventListener("click", function () {displayPlayersRoom();});
+    
+    menuItem7.addEventListener("click", function () {player.currentRoom.displayContentsToConsole();});
 }
 function updatePathButtons(){
     let pathA = document.getElementById('menu-item-1');
@@ -63,6 +78,7 @@ function updateStats(){
     let alive = document.getElementById('item-2');
     let something = document.getElementById('item-3');
     arrows.innerHTML=`Arrows: ${player.numArrows}`;
+    alive.innerHTML=`Alive: ${player.isAlive}`;
     
 }
 
@@ -152,7 +168,20 @@ function colorAllRooms(){
     rooms.forEach((room) => room.updateMapNodeColor());   
 }
 
-// Below should check all the ArryContents each room for the entity until the entity is found and then return the index of the room where the entity was found.
+
+function checkForEntityCollisions(room){
+    room.arryContets.forEach(entity => {
+        if(entity.getClassName() == 'arrow' ){
+            if(entity.lethal){player.alive=false;}
+            else{player.arrows++;}
+        }
+    });
+}
+
+// rooms[1].checkForCollisions(player);
+// console.log(player.numArrows);
+
+// Below should check all the arryContents each room for the entity until the entity is found and then return the index of the room where the entity was found.
 function checkRoomsFor(entity){
     let isDebug = false;
     let debugLog = "";
