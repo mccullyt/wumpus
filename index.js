@@ -45,6 +45,7 @@ function createMenu(){
     var menuItem7 = document.getElementById("menu-item-7");
     menuItem1.addEventListener("click", function () {
         pushEntityThroughPath(player,'a');
+        checkForEntityCollisions(player.currentRoom);
         updateStats();
     
     });
@@ -56,13 +57,17 @@ function createMenu(){
     });
     menuItem3.addEventListener("click", function () {
         pushEntityThroughPath(player,'c');
+        checkForEntityCollisions(player.currentRoom);
         updateStats();
     
     });
     
     menuItem5.addEventListener("click", function () {displayPlayersRoom();});
     
-    menuItem7.addEventListener("click", function () {player.currentRoom.displayContentsToConsole();});
+    menuItem7.addEventListener("click", function () {
+        console.log(player);
+        console.log(player.currentRoom)
+        player.currentRoom.displayContentsToConsole();});
 }
 function updatePathButtons(){
     let pathA = document.getElementById('menu-item-1');
@@ -170,8 +175,10 @@ function colorAllRooms(){
 
 
 function checkForEntityCollisions(room){
-    room.arryContets.forEach(entity => {
+    room.arryContents.forEach(entity => {
+        
         if(entity.getClassName() == 'arrow' ){
+            console.log('!!!found an arrow!!!');
             if(entity.lethal){player.alive=false;}
             else{player.arrows++;}
         }
