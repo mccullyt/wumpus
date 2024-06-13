@@ -17,6 +17,7 @@ rooms[1].addEntity(player);
 rooms[1].addEntity(new Arrow());
 rooms[1].color ="skyblue";
 rooms[2].addEntity(new Arrow);
+rooms[2].arryContents[0].lethal = false;
 colorAllRooms();
 updatePathButtons();
 updateStats();
@@ -176,14 +177,22 @@ function colorAllRooms(){
 
 
 function checkForArrowCollision(room){
-    // room.arryContents.forEach(entity => {
-        
-    //     if(entity.getClassName() == 'arrow' ){
-    //         console.log('!!!found an arrow!!!');
-    //         if(entity.lethal){player.isAlive=false;}
-    //         else{player.numArrows++;}
-    //     }
-    // });
+    // There are x number of conditions I need to look for
+    // Is the arrow lethal?
+    // Is arrow in same room as player?
+    // Is arrow in same room as wumpus?
+    // room = new room();
+    let roomHasArrow = room.checkContentsForType('Arrow');
+    let arrowObject = room.arryContents[room.getIndexOfType('Arrow')]
+    let isArrowLethal;
+    if(roomHasArrow){isArrowLethal = arrowObject.lethal == true;}
+
+    let roomHasWumpus = room.checkContentsForType('Wumpus');
+    let roomHasPlayer = room.checkContentsForType('Player');
+    
+    // if(roomHasArrow){console.log('!!!Arrow Found!!!')}
+    if(roomHasArrow && isArrowLethal){player.isAlive=false; room.removeEntity(arrowObject)}
+    else{player.numArrows++; room.removeEntity(arrowObject)}
 
 
 
