@@ -25,6 +25,8 @@ export default class Player extends Creature{
     move(){}
     spawn(){}
     listen(){}
-    toggleFireMode(){}
+    toggleFireMode(){
+        this.isFireModeOn = !this.isFireModeOn;
+    }
     // #endregion
 }

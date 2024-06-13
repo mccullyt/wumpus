@@ -1,5 +1,6 @@
 import Arrow from '/classes/arrow.mjs'
 import Player from '/classes/player.mjs'
+import Pit from '/classes/pit.mjs'
 import GameMaster from '/classes/gameMaster.mjs'
 import Room from '/classes/room.mjs'
 import paths from './paths.json' with { type: 'json' };
@@ -14,22 +15,12 @@ replaceRoomStringsWithRefs();
 createMenu();
 player.currentRoom = rooms[1];
 rooms[1].addEntity(player);
-rooms[1].addEntity(new Arrow());
 rooms[1].color ="skyblue";
-rooms[2].addEntity(new Arrow);
-rooms[2].arryContents[0].lethal = false;
+
 colorAllRooms();
 updatePathButtons();
 updateStats();
-console.log(rooms[1].checkContentsForType('Arrow'));
-console.log(rooms[1].getIndexOfType('Arrow'));
 
-console.log(rooms[1].checkContentsForType('Player'));
-console.log(rooms[1].getIndexOfType('Player'));
-
-
-console.log(player.getClassName());
-console.log(rooms[1].getClassName());
 // #endregion
 
 
@@ -46,26 +37,41 @@ function createMenu(){
     var menuItem6 = document.getElementById("menu-item-6");
     var menuItem7 = document.getElementById("menu-item-7");
     menuItem1.addEventListener("click", function () {
-        pushEntityThroughPath(player,'a');
-        checkForArrowCollision(player.currentRoom);
+        if(!player.isFireModeOn){pushEntityThroughPath(player,'a');}
+        else{
+            pushEntityThroughPath(new Arrow(),'a')
+            checkForArrowCollision(player.currentRoom);
+        }
         updateStats();
     
     });
     menuItem2.addEventListener("click", function () {
-        pushEntityThroughPath(player,'b');
-        checkForArrowCollision(player.currentRoom);
+        if(!player.isFireModeOn){
+            pushEntityThroughPath(player,'b');}
+        else{
+            pushEntityThroughPath(new Arrow(),'b')
+            checkForArrowCollision(player.currentRoom);
+        }
         updateStats();
     
     });
     menuItem3.addEventListener("click", function () {
-        pushEntityThroughPath(player,'c');
-        checkForArrowCollision(player.currentRoom);
+        if(!player.isFireModeOn){pushEntityThroughPath(player,'c');}
+        else{
+            pushEntityThroughPath(new Arrow(),'c');
+            checkForArrowCollision(player.currentRoom);
+        }
         updateStats();
     
     });
     
     menuItem5.addEventListener("click", function () {displayPlayersRoom();});
     
+    menuItem4.addEventListener("click",function () {
+        player.toggleFireMode();
+        menuItem4.innerHTML="Fire Mode: "+player.isFireModeOn;
+    })
+
     menuItem7.addEventListener("click", function () {
         console.log(player);
         console.log(player.currentRoom)
@@ -116,18 +122,32 @@ function convertPathToIndex(path){
     return index;
 }
 
-// TODO: Make this function work for all entities instead of just the player.
+
 function pushEntityThroughPath(entity,path){
-    console.log(path);
     path = convertPathToIndex(path);
-    console.log(path);
-    let currentRoom = entity.currentRoom;
-    let nextRoom=currentRoom.arryExits[path];
-    nextRoom.addEntity(entity);
-    currentRoom.removeEntity(entity);
-    currentRoom.color="grey"
-    nextRoom.color="skyblue"
-    entity.currentRoom = nextRoom;
+    let currentRoom;
+    let nextRoom
+    
+    
+    switch (entity.getClassName()) {
+        case 'Player':
+            currentRoom = entity.currentRoom;
+            nextRoom = currentRoom.arryExits[path];
+            currentRoom.color="grey"
+            nextRoom.color="skyblue"
+            entity.currentRoom = nextRoom;
+            nextRoom.addEntity(entity);        
+            currentRoom.removeEntity(entity);
+            break;
+    
+        case 'Arrow':
+            nextRoom = player.currentRoom.arryExits[path];
+            nextRoom.addEntity(entity);
+            break;
+        case 'Wumpus':
+            break;
+    }
+    
     colorAllRooms();
     updatePathButtons();
     // nextRoom.checkForCollisions();
@@ -196,6 +216,14 @@ function checkForArrowCollision(room){
 
 
 
+}
+
+function checkForPits(room){
+    let isPitNearby = false;
+    room.arryExits.forEach(exit => {
+        if(exit.checkContentsForType('Pit')){isPitNearby=true;}
+    });
+    return isPitNearby;
 }
 
 // Below should check all the arryContents each room for the entity until the entity is found and then return the index of the room where the entity was found.
