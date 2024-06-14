@@ -210,9 +210,12 @@ function checkForArrowCollision(room){
     let roomHasWumpus = room.checkContentsForType('Wumpus');
     let roomHasPlayer = room.checkContentsForType('Player');
     
-    // if(roomHasArrow){console.log('!!!Arrow Found!!!')}
-    if(roomHasArrow && isArrowLethal){player.isAlive=false; room.removeEntity(arrowObject)}
-    else{player.numArrows++; room.removeEntity(arrowObject)}
+    if(roomHasArrow){
+        if(isArrowLethal){player.isAlive=false; room.removeEntity(arrowObject);}    
+        else{player.numArrows++; room.removeEntity(arrowObject);}
+    }
+    // if(roomHasArrow && isArrowLethal){player.isAlive=false; room.removeEntity(arrowObject)}
+    
 
 
 
