@@ -7,10 +7,14 @@ export default class Arrow extends Thing {
     // #endregion
 
     // // #region constructors
-    constructor(){
+    constructor(currentRoom){
         super();
-        // this.NumCurrentRoom;
+        this.currentRoom = currentRoom;
     }
     #endregion
+
+    //#region methods
+    
+    //#endregion
 
 }

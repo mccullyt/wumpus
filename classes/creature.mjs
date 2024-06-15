@@ -5,16 +5,18 @@ export default class Creature extends Thing{
     // #endregion
 
     // #region constructors
-    constructor(){
+    constructor(currentRoom){
         super()
-        this.IsAlive;
-        this.NumTargetRoom;
+        this.isAlive;
+        // this.NumTargetRoom;
+        this.currentRoom;
+        this.numCurrentRoom;
         
     }
     //#endregion
 
     // #region Methods
-    move(numTargetRoom){}
+    
     listen(){}
     // #endregion
 }

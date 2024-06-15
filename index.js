@@ -38,23 +38,30 @@ function createMenu(){
     var menuItem7 = document.getElementById("menu-item-7");
     
     menuItem1.addEventListener("click", function () {
-        if(!player.isFireModeOn){pushEntityThroughPath(player,'a');}
-        else{pushEntityThroughPath(new Arrow(),'a'); checkForArrowCollision(player.currentRoom);}
+        if(!player.isFireModeOn){player.move('a');}
+        else{fireArrow('a'); }
         updateStats();
+        updatePathButtons();
+        colorAllRooms();
+        
     
     });
     
     menuItem2.addEventListener("click", function () {
-        if(!player.isFireModeOn){pushEntityThroughPath(player,'b');}
-        else{pushEntityThroughPath(new Arrow(),'b'); checkForArrowCollision(player.currentRoom);}
+        if(!player.isFireModeOn){player.move('b');}
+        else{fireArrow('b');}
+        updatePathButtons();
         updateStats();
+        colorAllRooms();
     
     });
     
     menuItem3.addEventListener("click", function () {
-        if(!player.isFireModeOn){pushEntityThroughPath(player,'c');}
-        else{pushEntityThroughPath(new Arrow(),'c'); checkForArrowCollision(player.currentRoom);}
+        if(!player.isFireModeOn){player.move('c');}
+        else{fireArrow('c');}
+        updatePathButtons();
         updateStats();
+        colorAllRooms();
     
     });
     
@@ -255,7 +262,12 @@ function checkRoomsFor(entity){
 // #endregion
 
 
-
+// #region Other Functions
+function fireArrow(path){
+    let arrow = new Arrow(player.currentRoom);
+    arrow.move(path);
+}
+// #endregion
 
 
 

@@ -12,8 +12,6 @@ export default class Player extends Creature{
     // // #region constructors
     constructor(){
         super();
-        this.currentRoom;
-        this.numCurrentRoom;
         this.numArrows = 10;
         this.isAlive = true
         this.isFireModeOn = false
@@ -22,7 +20,6 @@ export default class Player extends Creature{
 
     // #region Methods
     fireArrow(){}
-    move(){}
     spawn(){}
     listen(){}
     toggleFireMode(){
