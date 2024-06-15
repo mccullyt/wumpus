@@ -9,7 +9,7 @@ import paths from './paths.json' with { type: 'json' };
 // #region intial setup
 const player = new Player();
 const rooms = [new Room(0)];    //dummy room is created because the json paths file starts at 1 instead of 0. This should keep me from having to -1 from a lot of stuff.
-const testArrow = new Arrow();
+const turn = 0;
 createRooms();
 replaceRoomStringsWithRefs();
 createMenu();
@@ -36,31 +36,24 @@ function createMenu(){
     var menuItem5 = document.getElementById("menu-item-5");
     var menuItem6 = document.getElementById("menu-item-6");
     var menuItem7 = document.getElementById("menu-item-7");
+    
     menuItem1.addEventListener("click", function () {
         if(!player.isFireModeOn){pushEntityThroughPath(player,'a');}
-        else{
-            pushEntityThroughPath(new Arrow(),'a')
-            checkForArrowCollision(player.currentRoom);
-        }
+        else{pushEntityThroughPath(new Arrow(),'a'); checkForArrowCollision(player.currentRoom);}
         updateStats();
     
     });
+    
     menuItem2.addEventListener("click", function () {
-        if(!player.isFireModeOn){
-            pushEntityThroughPath(player,'b');}
-        else{
-            pushEntityThroughPath(new Arrow(),'b')
-            checkForArrowCollision(player.currentRoom);
-        }
+        if(!player.isFireModeOn){pushEntityThroughPath(player,'b');}
+        else{pushEntityThroughPath(new Arrow(),'b'); checkForArrowCollision(player.currentRoom);}
         updateStats();
     
     });
+    
     menuItem3.addEventListener("click", function () {
         if(!player.isFireModeOn){pushEntityThroughPath(player,'c');}
-        else{
-            pushEntityThroughPath(new Arrow(),'c');
-            checkForArrowCollision(player.currentRoom);
-        }
+        else{pushEntityThroughPath(new Arrow(),'c'); checkForArrowCollision(player.currentRoom);}
         updateStats();
     
     });

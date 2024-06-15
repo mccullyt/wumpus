@@ -17,5 +17,8 @@ export default class Thing{
     getClassName() {
         return this.constructor.name;
     }
+    pushThingThroughPath(thing,path){
+        
+    }
     // #endregion
 }

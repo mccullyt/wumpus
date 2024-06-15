@@ -62,7 +62,9 @@ export default class room extends Thing {
 
     updateMapNodeColor(){
         try{this.mapNode.style.fill=this.color;} 
-        catch(e) { console.log(e);}
+        // catch(e) { console.log(e);}
+        catch(e) { }
+
     }
 
     displayExitsToConsole(){
