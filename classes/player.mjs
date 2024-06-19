@@ -19,7 +19,13 @@ export default class Player extends Creature{
     #endregion
 
     // #region Methods
-    fireArrow(){}
+    fireArrow(path, arrow){
+        if(this.numArrows>0){
+            arrow.move(path);
+            this.numArrows--;
+        }
+        
+    }
     spawn(){}
     listen(){}
     toggleFireMode(){

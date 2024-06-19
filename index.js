@@ -3,19 +3,28 @@ import Player from '/classes/player.mjs'
 import Pit from '/classes/pit.mjs'
 import GameMaster from '/classes/gameMaster.mjs'
 import Room from '/classes/room.mjs'
+import Wumpus from '/classes/wumpus.mjs'
 import paths from './paths.json' with { type: 'json' };
+import room from './classes/room.mjs'
 
 
 // #region intial setup
 const player = new Player();
 const rooms = [new Room(0)];    //dummy room is created because the json paths file starts at 1 instead of 0. This should keep me from having to -1 from a lot of stuff.
-const turn = 0;
+const wumpus = new Wumpus()
+let turns = 0;
 createRooms();
 replaceRoomStringsWithRefs();
 createMenu();
 player.currentRoom = rooms[1];
 rooms[1].addEntity(player);
 rooms[1].color ="skyblue";
+
+let wumpusSpawnRoom = wumpus.randomSpawn();
+wumpus.currentRoom = rooms[wumpusSpawnRoom];
+rooms[wumpusSpawnRoom].addEntity(wumpus);
+rooms[wumpusSpawnRoom].color = "red";
+
 
 colorAllRooms();
 updatePathButtons();
@@ -38,30 +47,16 @@ function createMenu(){
     var menuItem7 = document.getElementById("menu-item-7");
     
     menuItem1.addEventListener("click", function () {
-        if(!player.isFireModeOn){player.move('a');}
-        else{fireArrow('a'); }
-        updateStats();
-        updatePathButtons();
-        colorAllRooms();
-        
-    
+        updateGame('a');
     });
     
     menuItem2.addEventListener("click", function () {
-        if(!player.isFireModeOn){player.move('b');}
-        else{fireArrow('b');}
-        updatePathButtons();
-        updateStats();
-        colorAllRooms();
+        updateGame('b');
     
     });
     
     menuItem3.addEventListener("click", function () {
-        if(!player.isFireModeOn){player.move('c');}
-        else{fireArrow('c');}
-        updatePathButtons();
-        updateStats();
-        colorAllRooms();
+        updateGame('c');
     
     });
     
@@ -73,9 +68,9 @@ function createMenu(){
     })
 
     menuItem7.addEventListener("click", function () {
-        console.log(player);
-        console.log(player.currentRoom)
-        player.currentRoom.displayContentsToConsole();});
+        rooms.forEach(room => {
+            console.log(room);
+        });});
 }
 function updatePathButtons(){
     let pathA = document.getElementById('menu-item-1');
@@ -89,9 +84,10 @@ function updatePathButtons(){
 function updateStats(){
     let arrows = document.getElementById('item-1');
     let alive = document.getElementById('item-2');
-    let something = document.getElementById('item-3');
+    let turn = document.getElementById('item-3');
     arrows.innerHTML=`Arrows: ${player.numArrows}`;
     alive.innerHTML=`Alive: ${player.isAlive}`;
+    turn.innerHTML=`Turn: ${turns}`;
     
 }
 
@@ -192,6 +188,11 @@ function replaceRoomStringsWithRefs(){
 }
 
 function colorAllRooms(){
+    rooms.forEach(room => {
+        if(room.checkContentsForType('Wumpus')!=false){room.color = 'red';}
+        else if(room.checkContentsForType('Player')!=false){room.color = 'skyblue';}
+        else{room.color='grey';}
+    });
     rooms.forEach((room) => room.updateMapNodeColor());   
 }
 
@@ -205,20 +206,30 @@ function checkForArrowCollision(room){
     let roomHasArrow = room.checkContentsForType('Arrow');
     let arrowObject = room.arryContents[room.getIndexOfType('Arrow')]
     let isArrowLethal;
-    if(roomHasArrow){isArrowLethal = arrowObject.lethal == true;}
+    if(roomHasArrow){isArrowLethal = arrowObject.lethal == true && arrowObject.turnSpawn == turns;}
 
     let roomHasWumpus = room.checkContentsForType('Wumpus');
     let roomHasPlayer = room.checkContentsForType('Player');
     
     if(roomHasArrow){
-        if(isArrowLethal){player.isAlive=false; room.removeEntity(arrowObject);}    
-        else{player.numArrows++; room.removeEntity(arrowObject);}
+        if(isArrowLethal && roomHasPlayer){player.isAlive=false; room.removeEntity(arrowObject);}    
+        else if (isArrowLethal && roomHasWumpus){room.removeEntity(wumpus); room.removeEntity(arrowObject);}
+        else if (roomHasPlayer){player.numArrows++; room.removeEntity(arrowObject);}
     }
+    // if(roomHasWumpus){
+    //     if(isArrowLethal){room.removeEntity(wumpus); room.removeEntity(arrowObject);}
+    // }
     // if(roomHasArrow && isArrowLethal){player.isAlive=false; room.removeEntity(arrowObject)}
     
 
 
 
+}
+
+function checkForWumpusCollision(room){
+    let roomHasWumpus = room.checkContentsForType('Wumpus');
+    let wumpusObject = room.arryContents[room.getIndexOfType('Wumpus')];
+    if(roomHasWumpus){player.isAlive=false;}
 }
 
 function checkForPits(room){
@@ -263,9 +274,29 @@ function checkRoomsFor(entity){
 
 
 // #region Other Functions
-function fireArrow(path){
-    let arrow = new Arrow(player.currentRoom);
-    arrow.move(path);
+function checkForArrowCollisions(){
+    checkForArrowCollision(player.currentRoom);
+    player.currentRoom.arryExits.forEach(room => {
+        checkForArrowCollision(room);
+    });
+}
+
+function updateGame(path){
+    let currentRoom = player.currentRoom;
+    if(!player.isFireModeOn && player.isAlive){player.move(path);}
+    else{
+        let arrow = new Arrow(currentRoom); 
+        arrow.turnSpawn=turns; 
+        player.fireArrow(path,arrow);
+        currentRoom.removeEntity(arrow); arrow = 0; 
+    }
+
+    checkForArrowCollisions();
+    checkForWumpusCollision(player.currentRoom);
+    updateStats();
+    updatePathButtons();
+    colorAllRooms();
+    turns++;
 }
 // #endregion
 

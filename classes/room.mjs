@@ -57,7 +57,7 @@ export default class room extends Thing {
     removeEntity(entity){
         // let indexOfEntity = this.ArryContents.indexOf(entity);
         let indexOfEntity = this.getContentsIndexOf(entity);
-        this.arryContents.splice(indexOfEntity);
+        if(indexOfEntity!=-1){this.arryContents.splice(indexOfEntity);}
     }
 
     updateMapNodeColor(){

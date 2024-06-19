@@ -10,6 +10,7 @@ export default class Thing{
     constructor(){
         // this.NumCurrentRoom;
         this.numCurrentRoom;
+        this.trunSpawn;
     }
     //#endregion
 
@@ -43,6 +44,8 @@ export default class Thing{
                 // nextRoom.addEntity(entity);
                 break;
             case 'Wumpus':
+                currentRoom.color="grey"
+                nextRoom.color="red"
                 break;
         }
 
