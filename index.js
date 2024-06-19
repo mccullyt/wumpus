@@ -198,11 +198,6 @@ function colorAllRooms(){
 
 
 function checkForArrowCollision(room){
-    // There are x number of conditions I need to look for
-    // Is the arrow lethal?
-    // Is arrow in same room as player?
-    // Is arrow in same room as wumpus?
-    // room = new room();
     let roomHasArrow = room.checkContentsForType('Arrow');
     let arrowObject = room.arryContents[room.getIndexOfType('Arrow')]
     let isArrowLethal;
@@ -215,7 +210,7 @@ function checkForArrowCollision(room){
         if(isArrowLethal && roomHasPlayer){player.isAlive=false; room.removeEntity(arrowObject);}    
         else if (isArrowLethal && roomHasWumpus){room.removeEntity(wumpus); room.removeEntity(arrowObject);}
         else if (roomHasPlayer){player.numArrows++; room.removeEntity(arrowObject);}
-    }
+    }  
     // if(roomHasWumpus){
     //     if(isArrowLethal){room.removeEntity(wumpus); room.removeEntity(arrowObject);}
     // }
