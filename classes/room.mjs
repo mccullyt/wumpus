@@ -5,6 +5,7 @@ export default class room extends Thing {
     arryExits = [];
     arryContents = [];
     color = "grey";
+    emptyColor = "grey";
     mapNode = "";
     // #endregion
 
@@ -56,8 +57,12 @@ export default class room extends Thing {
 
     removeEntity(entity){
         // let indexOfEntity = this.ArryContents.indexOf(entity);
-        let indexOfEntity = this.getContentsIndexOf(entity);
-        if(indexOfEntity!=-1){this.arryContents.splice(indexOfEntity);}
+        // let indexOfEntity = this.getContentsIndexOf(entity);
+        // if(indexOfEntity!=-1){this.arryContents.splice(indexOfEntity);}
+        let newArry = this.arryContents.filter((element) => {
+            return element != entity;
+        })
+        this.arryContents = newArry;
     }
 
     updateMapNodeColor(){

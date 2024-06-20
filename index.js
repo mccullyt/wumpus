@@ -18,12 +18,12 @@ replaceRoomStringsWithRefs();
 createMenu();
 player.currentRoom = rooms[1];
 rooms[1].addEntity(player);
-rooms[1].color ="skyblue";
+rooms[1].color =player.color;
 
 let wumpusSpawnRoom = wumpus.randomSpawn();
 wumpus.currentRoom = rooms[wumpusSpawnRoom];
 rooms[wumpusSpawnRoom].addEntity(wumpus);
-rooms[wumpusSpawnRoom].color = "red";
+rooms[wumpusSpawnRoom].color = wumpus.color;
 
 
 colorAllRooms();
@@ -123,14 +123,13 @@ function pushEntityThroughPath(entity,path){
     path = convertPathToIndex(path);
     let currentRoom;
     let nextRoom
-    
-    
+
     switch (entity.getClassName()) {
         case 'Player':
             currentRoom = entity.currentRoom;
             nextRoom = currentRoom.arryExits[path];
-            currentRoom.color="grey"
-            nextRoom.color="skyblue"
+            currentRoom.color=currentRoom.emptyColor;
+            // nextRoom.color=player.color;
             entity.currentRoom = nextRoom;
             nextRoom.addEntity(entity);        
             currentRoom.removeEntity(entity);
@@ -189,8 +188,8 @@ function replaceRoomStringsWithRefs(){
 
 function colorAllRooms(){
     rooms.forEach(room => {
-        if(room.checkContentsForType('Wumpus')!=false){room.color = 'red';}
-        else if(room.checkContentsForType('Player')!=false){room.color = 'skyblue';}
+        if(room.checkContentsForType('Wumpus')!=false){room.color = wumpus.color;}
+        else if(room.checkContentsForType('Player')!=false){room.color = player.color;}
         else{room.color='grey';}
     });
     rooms.forEach((room) => room.updateMapNodeColor());   
@@ -208,7 +207,7 @@ function checkForArrowCollision(room){
     
     if(roomHasArrow){
         if(isArrowLethal && roomHasPlayer){player.isAlive=false; room.removeEntity(arrowObject);}    
-        else if (isArrowLethal && roomHasWumpus){room.removeEntity(wumpus); room.removeEntity(arrowObject);}
+        else if (isArrowLethal && roomHasWumpus){wumpus.isAlive = false; room.removeEntity(wumpus); room.removeEntity(arrowObject);}
         else if (roomHasPlayer){player.numArrows++; room.removeEntity(arrowObject);}
     }  
     // if(roomHasWumpus){
@@ -288,6 +287,7 @@ function updateGame(path){
 
     checkForArrowCollisions();
     checkForWumpusCollision(player.currentRoom);
+    if(wumpus.isAlive){wumpus.randomPath();}
     updateStats();
     updatePathButtons();
     colorAllRooms();

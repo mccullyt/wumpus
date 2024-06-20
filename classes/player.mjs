@@ -7,6 +7,7 @@ export default class Player extends Creature{
     // #region fields
     // static NumCurrentRoom = 10;
     numArrows = 0;
+    color="skyblue"
     // #endregion
 
     // // #region constructors

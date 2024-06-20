@@ -11,6 +11,7 @@ export default class Thing{
         // this.NumCurrentRoom;
         this.numCurrentRoom;
         this.trunSpawn;
+        this.color;
     }
     //#endregion
 
@@ -33,10 +34,11 @@ export default class Thing{
         path = this.convertPathToIndex(path);
         let currentRoom = entity.currentRoom;
         let nextRoom = currentRoom.arryExits[path];
+        let color = entity.color;
         switch (entity.getClassName()) {
             case 'Player':
-                currentRoom.color="grey"
-                nextRoom.color="skyblue"
+                currentRoom.color=currentRoom.emptyColor;
+                nextRoom.color=entity.color;
                 break;
         
             case 'Arrow':
@@ -44,8 +46,10 @@ export default class Thing{
                 // nextRoom.addEntity(entity);
                 break;
             case 'Wumpus':
-                currentRoom.color="grey"
-                nextRoom.color="red"
+                
+                currentRoom.color=currentRoom.emptyColor;
+                console.log(color);
+                nextRoom.color=color
                 break;
         }
 
