@@ -9,9 +9,10 @@ export default class Thing{
     // #region constructors
     constructor(){
         // this.NumCurrentRoom;
-        this.numCurrentRoom;
         this.trunSpawn;
         this.color;
+        this.currentRoom;
+        this.numCurrentRoom;
     }
     //#endregion
 
@@ -61,5 +62,20 @@ export default class Thing{
     move(path){
         this.pushEntityThroughPath(this,path)
     }
+
+    randomPath(){
+        let paths=[];
+        let MIN;
+        let MAX;
+        let rndIndex
+        
+        paths = ['a','b','c'];
+        MIN = 0;
+        MAX = paths.length;
+        rndIndex = Math.floor(Math.random() * (MAX - MIN))
+        this.move(paths[rndIndex]);
+    }
+
+   
     // #endregion
 }

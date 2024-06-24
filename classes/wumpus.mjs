@@ -3,6 +3,7 @@ import Creature from './creature.mjs'
 export default class Wumpus extends Creature{
     // #region fields
     color = "red";
+    isStartled = false;
     // #endregion
 
     // // #region constructors
@@ -10,7 +11,7 @@ export default class Wumpus extends Creature{
         super();
         // this.NumCurrentRoom;
         this.isAlive = true
-        this.randomSpawn()
+        
     }
     #endregion
 

@@ -5,7 +5,7 @@ import Creature from './creature.mjs'
 
 export default class Bat extends Creature{
     // #region fields
-    // static NumCurrentRoom = 10;
+    color = "coral";
     // #endregion
 
     // // #region constructors

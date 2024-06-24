@@ -48,3 +48,7 @@
 .stats-item:hover{
     background-color: brown;
 }
+
+.output-container{
+    background-color: plum;
+}
