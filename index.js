@@ -18,8 +18,10 @@ const pitA = new Pit();
 const pitB = new Pit();
 const batA = new Bat();
 const batB = new Bat();
+let showHazards = false;
 let turns = 0;
 let illicitRooms = [0,1,2,5,8];
+
 createRooms();
 replaceRoomStringsWithRefs();
 createMenu();
@@ -50,6 +52,7 @@ function createMenu(){
     var menuItem5 = document.getElementById("menu-item-5");
     var menuItem6 = document.getElementById("menu-item-6");
     var menuItem7 = document.getElementById("menu-item-7");
+    var menuItem8 = document.getElementById("menu-item-8");
     
     menuItem1.addEventListener("click", function () {
         updateGame('a');
@@ -76,6 +79,15 @@ function createMenu(){
         rooms.forEach(room => {
             console.log(room);
         });});
+        
+    menuItem8.addEventListener("click", function() {
+        console.log("ShowHazards: "+showHazards);
+        showHazards = !showHazards;
+        menuItem8.innerHTML="Show Hazards: "+showHazards;
+        console.log("ShowHazards: "+showHazards);
+        colorAllRooms();
+    })
+        
 }
 function updatePathButtons(){
     let pathA = document.getElementById('menu-item-1');
@@ -155,11 +167,26 @@ function replaceRoomStringsWithRefs(){
 
 function colorAllRooms(){
     rooms.forEach(room => {
-        if(room.checkContentsForType('Wumpus')!=false){room.color = wumpus.color;}
-        else if(room.checkContentsForType('Player')!=false){room.color = player.color;}
-        else if(room.checkContentsForType('Bat')!=false){room.color = batA.color;}
-        else if(room.checkContentsForType('Pit')!=false){room.color = pitA.color;}
-        else{room.emptyColor;}
+        let roomHasBat = room.checkContentsForType('Bat');
+        let roomHasPit = room.checkContentsForType('Pit');
+        let roomHasPlayer = room.checkContentsForType('Player');
+        let roomHasWumpus = room.checkContentsForType('Wumpus');
+        let showRoomHasBat = function () {room.color = batA.color;}
+        let showRoomIsEmpty = function () {room.color = room.emptyColor;}
+        let showRoomHasPit = function (){room.color = pitA.color;} 
+        let showRoomHasPlayer = function (){room.color = player.color;}
+        let showRoomHasWumpus = function (){room.color = wumpus.color;}
+        
+        if(showHazards){
+            if(roomHasWumpus){showRoomHasWumpus();}
+            else if(roomHasPlayer){showRoomHasPlayer()}
+            else if(roomHasBat){showRoomHasBat();}
+            else if(roomHasPit){showRoomHasPit();}
+        }
+        else {showRoomIsEmpty();}
+        if(roomHasPlayer){showRoomHasPlayer();}
+        
+        
     });
     rooms.forEach((room) => room.updateMapNodeColor());   
 }
@@ -195,16 +222,10 @@ function getRndRoomFrom(arryRooms){
     MAX = spawnRooms.length;
     
     rndIndex = Math.floor(Math.random() * (MAX - MIN));
-    
-    console.log(spawnRooms[rndIndex])
-    console.log(rndIndex)
-    console.log(this)
     return spawnRooms[rndIndex];
 }
 
 function getRndRoomExcept(illicitRooms){
-    console.log("rooms:");
-    console.log(rooms);
     let licitRooms = [];
     let MIN;
     let MAX;
@@ -226,9 +247,7 @@ function getRndRoomExcept(illicitRooms){
     MAX = licitRooms.length;    
     rndIndex = Math.floor(Math.random() * (MAX - MIN));
     
-    console.log(licitRooms[rndIndex])
-    console.log(rndIndex)
-    console.log(this)
+
     return licitRooms[rndIndex];
 }
 
@@ -266,7 +285,7 @@ function checkForBatCollision(room){
     let roomHasPlayer = room.checkContentsForType('Player');
     let bat = room.arryContents[room.getIndexOfType('Bat')];
     if(roomHasBat && roomHasPlayer){
-        let rndRoom = getRndRoom();
+        let rndRoom = getRndRoomExcept(illicitRooms);
         room.removeEntity(player);
         rooms[rndRoom].addEntity(player);
         player.currentRoom=rooms[rndRoom];
@@ -336,6 +355,7 @@ function checkForHazards(){
 
 function updateGame(path){
     let currentRoom = player.currentRoom;
+    let wumpusCanMove = wumpus.isAlive && wumpus.isStartled
     let movePlayer = function(){player.move(path);}
     let moveWumpus = function(){
         wumpus.randomPath();
@@ -352,7 +372,7 @@ function updateGame(path){
         if(!player.isFireModeOn){movePlayer();} else{shootArrow();}
         
         checkForArrowCollisions();
-        if(wumpus.isAlive && wumpus.isStartled){moveWumpus();}
+        if(wumpusCanMove){moveWumpus();}
         checkForWumpusCollision(player.currentRoom);
         checkForBatCollision(player.currentRoom);
         checkForPitCollision(player.currentRoom);

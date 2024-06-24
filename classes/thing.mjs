@@ -13,6 +13,7 @@ export default class Thing{
         this.color;
         this.currentRoom;
         this.numCurrentRoom;
+        this.isHidden;
     }
     //#endregion
 

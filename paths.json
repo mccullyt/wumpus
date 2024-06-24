@@ -1,9 +1,9 @@
 {
       "room": [
         {
-          "pathA": "2",
+          "pathA": "5",
           "pathB": "8",
-          "pathC": "5"
+          "pathC": "2"
         },
         {
           "pathA": "1",
@@ -26,8 +26,8 @@
           "pathC": "1"
         },
         {
-          "pathA": "5",
-          "pathB": "15",
+          "pathA": "15",
+          "pathB": "5",
           "pathC": "7"
         },
         {
@@ -76,9 +76,9 @@
           "pathC": "6"
         },
         {
-          "pathA": "15",
-          "pathB": "17",
-          "pathC": "20"
+          "pathA": "20",
+          "pathB": "15",
+          "pathC": "17"
         },
         {
           "pathA": "16",
