@@ -54,19 +54,11 @@ function createMenu(){
     var menuItem7 = document.getElementById("menu-item-7");
     var menuItem8 = document.getElementById("menu-item-8");
     
-    menuItem1.addEventListener("click", function () {
-        updateGame('a');
-    });
+    menuItem1.addEventListener("click", function () {updateGame('a');});
     
-    menuItem2.addEventListener("click", function () {
-        updateGame('b');
+    menuItem2.addEventListener("click", function () {updateGame('b');});
     
-    });
-    
-    menuItem3.addEventListener("click", function () {
-        updateGame('c');
-    
-    });
+    menuItem3.addEventListener("click", function () {updateGame('c');});
     
     menuItem4.addEventListener("click",function () {
         player.toggleFireMode();
@@ -181,6 +173,7 @@ function colorAllRooms(){
             else if(roomHasPlayer){showRoomHasPlayer()}
             else if(roomHasBat){showRoomHasBat();}
             else if(roomHasPit){showRoomHasPit();}
+            else {showRoomIsEmpty();}
         }
         else {showRoomIsEmpty();}
         if(roomHasPlayer){showRoomHasPlayer();}
@@ -205,7 +198,7 @@ function checkNearRoomsFor(entityType){
 
 
 function getRndRoom(){
-    let MIN = 0;
+    let MIN = 1;
     let MAX = 20;
     let rndIndex;
     rndIndex = Math.floor(Math.random() * (MAX - MIN));
@@ -214,13 +207,9 @@ function getRndRoom(){
 
 function getRndRoomFrom(arryRooms){
     let spawnRooms = arryRooms;
-    let MIN;
-    let MAX;
+    let MIN = 1;
+    let MAX = spawnRooms.length;
     let rndIndex;
-    
-    MIN = 0;
-    MAX = spawnRooms.length;
-    
     rndIndex = Math.floor(Math.random() * (MAX - MIN));
     return spawnRooms[rndIndex];
 }
@@ -244,7 +233,6 @@ function getRndRoomExcept(illicitRooms){
     MAX = licitRooms.length;    
     rndIndex = Math.floor(Math.random() * (MAX - MIN));
     
-
     return licitRooms[rndIndex];
 }
 
@@ -254,16 +242,17 @@ function getRndRoomExcept(illicitRooms){
 
 function checkForArrowCollision(room){
     let roomHasArrow = room.checkContentsForType('Arrow');
-    let arrowObject = room.arryContents[room.getIndexOfType('Arrow')]
-    let isArrowLethal;
-    if(roomHasArrow){isArrowLethal = arrowObject.lethal == true && arrowObject.turnSpawn == turns;}
-
     let roomHasWumpus = room.checkContentsForType('Wumpus');
     let roomHasPlayer = room.checkContentsForType('Player');
     
     if(roomHasArrow){
-        if(isArrowLethal && roomHasPlayer){player.isAlive=false; room.removeEntity(arrowObject);}    
-        else if (isArrowLethal && roomHasWumpus){wumpus.isAlive = false; room.removeEntity(wumpus); room.removeEntity(arrowObject);}
+        let arrowObject = room.arryContents[room.getIndexOfType('Arrow')];
+        let isArrowLethal = arrowObject.lethal && arrowObject.turnSpawn == turns;
+        let lethalPlayerCollision = isArrowLethal && roomHasPlayer;
+        let lethalWumpusCollision = isArrowLethal && roomHasWumpus;
+
+        if(lethalPlayerCollision){player.isAlive=false; room.removeEntity(arrowObject);}    
+        else if (lethalWumpusCollision){wumpus.isAlive = false; room.removeEntity(wumpus); room.removeEntity(arrowObject);}
         else if (roomHasPlayer){player.numArrows++; room.removeEntity(arrowObject);}
         else if (isArrowLethal){wumpus.isStartled = true;};
     }  
@@ -280,8 +269,8 @@ function checkForArrowCollisions(){
 function checkForBatCollision(room){
     let roomHasBat = room.checkContentsForType('Bat');
     let roomHasPlayer = room.checkContentsForType('Player');
-    let bat = room.arryContents[room.getIndexOfType('Bat')];
-    if(roomHasBat && roomHasPlayer){
+    let roomHasCollision = roomHasBat && roomHasPlayer;
+    if(roomHasCollision){
         let rndRoom = getRndRoomExcept(illicitRooms);
         room.removeEntity(player);
         rooms[rndRoom].addEntity(player);
@@ -292,15 +281,15 @@ function checkForBatCollision(room){
 function checkForPitCollision(room){
     let roomHasPit = room.checkContentsForType('Pit');
     let roomHasPlayer = room.checkContentsForType('Player');
-    let pit = room.arryContents[room.getIndexOfType('Pit')];
-    if(roomHasPit && roomHasPlayer){player.isAlive=false;}
+    let roomHasCollision = roomHasPit && roomHasPlayer;
+    if(roomHasCollision){player.isAlive=false;}
 }
 
 function checkForWumpusCollision(room){
     let roomHasWumpus = room.checkContentsForType('Wumpus');
     let roomHasPlayer = room.checkContentsForType('Player');
-    let wumpusObject = room.arryContents[room.getIndexOfType('Wumpus')];
-    if(roomHasWumpus && roomHasPlayer){player.isAlive=false;}
+    let roomHasCollision = roomHasWumpus && roomHasPlayer;
+    if(roomHasCollision){player.isAlive=false;}
 }
 //#endregion
 

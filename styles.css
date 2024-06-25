@@ -1,4 +1,9 @@
 
+.grid-container{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr ;
+}
 
 
 .menu-container{
@@ -50,5 +55,16 @@
 }
 
 .output-container{
+    display:flex;
+    justify-content: space-around;
     background-color: plum;
+}
+
+.output-item{
+    display: flex;
+    flex-basis: 100px;
+    text-align: center;
+    align-items:center;
+    justify-content: center;
+    background-color: darksalmon;
 }
