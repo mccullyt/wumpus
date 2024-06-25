@@ -198,7 +198,8 @@ function checkNearRoomsFor(entityType){
     let isEntityNear = false;
     let nearRooms = player.currentRoom.arryExits;
     nearRooms.forEach(room => {
-        if(room.checkContentsForType(entityType)){isEntityNear=true;}
+        let roomHasEntityType = () => {room.checkContentsForType(entityType)}
+        if(roomHasEntityType()){isEntityNear=true;}
     });
     return isEntityNear;
 }
@@ -234,14 +235,11 @@ function getRndRoomExcept(illicitRooms){
         for (let index = 0; index < illicitRooms.length; index++) {
             const illicitRoom = illicitRooms[index];
             if (illicitRoom == room){return true};
-            
         }
         return false;    
     }
 
-    rooms.forEach(room => {
-        if(!isIllicit(room.id)){licitRooms.push(room.id);}
-    });
+    rooms.forEach(room => {if(!isIllicit(room.id)){licitRooms.push(room.id);} });
 
     MIN = 0;
     MAX = licitRooms.length;    
