@@ -137,7 +137,6 @@ function replaceRoomStringsWithRefs(){
         let element = rooms[i];
         let debugLog="";
     
-            
         debugLog+=`Room: ${element.id}\n`;
                     
         debugLog+="Deriving string values to be converted into references\n";
@@ -315,8 +314,8 @@ function setupHazards(){
     rooms[wumpusSpawnRoom].addEntity(wumpus);
     
     let pitARandomSpawn = getRndRoomExcept(illicitRooms);
-    illicitRooms.push(pitARandomSpawn);
     let pitBRandomSpawn = getRndRoomExcept(illicitRooms);
+    illicitRooms.push(pitARandomSpawn);
     illicitRooms.push(pitBRandomSpawn);
     rooms[pitARandomSpawn].addEntity(pitA);
     rooms[pitBRandomSpawn].addEntity(pitB);
@@ -324,8 +323,8 @@ function setupHazards(){
     pitB.currentRoom=rooms[pitBRandomSpawn];
     
     let batARandomSpawn = getRndRoomExcept(illicitRooms);
-    illicitRooms.push(batARandomSpawn);
     let batBRandomSpawn = getRndRoomExcept(illicitRooms);
+    illicitRooms.push(batARandomSpawn);
     illicitRooms.push(batBRandomSpawn);
     rooms[batARandomSpawn].addEntity(batA);
     rooms[batBRandomSpawn].addEntity(batB);
@@ -335,7 +334,6 @@ function setupHazards(){
 
 function checkForHazards(){
     let output = document.getElementById("output");
-    // let isPitNearby = checkForPits(player.currentRoom);
     let isBatNearby = checkNearRoomsFor('Bat');
     let isPitNearby = checkNearRoomsFor('Pit');
     let isWumpusNearby = checkNearRoomsFor('Wumpus');
@@ -353,7 +351,7 @@ function checkForHazards(){
 
 function updateGame(path){
     let currentRoom = player.currentRoom;
-    let wumpusCanMove = wumpus.isAlive && wumpus.isStartled
+    let wumpusCanMove = () => {return wumpus.isAlive && wumpus.isStartled}
     let movePlayer = function(){player.move(path);}
     let moveWumpus = function(){
         wumpus.randomPath();
@@ -367,10 +365,9 @@ function updateGame(path){
         currentRoom.removeEntity(arrow); 
     }
     if(player.isAlive){
-        if(!player.isFireModeOn){movePlayer();} else{shootArrow();}
-        
+        if(!player.isFireModeOn){movePlayer();} else{shootArrow();}  
         checkForArrowCollisions();
-        if(wumpusCanMove){moveWumpus();}
+        if(wumpusCanMove()){moveWumpus();}
         checkForWumpusCollision(player.currentRoom);
         checkForBatCollision(player.currentRoom);
         checkForPitCollision(player.currentRoom);
