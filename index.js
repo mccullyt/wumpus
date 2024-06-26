@@ -190,8 +190,10 @@ function checkNearRoomsFor(entityType){
     let isEntityNear = false;
     let nearRooms = player.currentRoom.arryExits;
     nearRooms.forEach(room => {
-        let roomHasEntityType = () => {room.checkContentsForType(entityType)}
-        if(roomHasEntityType()){isEntityNear=true;}
+        // let roomHasEntityType = () => {room.checkContentsForType(entityType)}
+        let roomHasEntityType = room.checkContentsForType(entityType);
+        // if(roomHasEntityType()){isEntityNear=true;}
+        isEntityNear = roomHasEntityType;
     });
     return isEntityNear;
 }
@@ -326,11 +328,14 @@ function checkForHazards(){
     let isBatNearby = checkNearRoomsFor('Bat');
     let isPitNearby = checkNearRoomsFor('Pit');
     let isWumpusNearby = checkNearRoomsFor('Wumpus');
-    output.innerHTML = `
-        Bat is nearby: ${isBatNearby}<br>
-        Pit is nearby: ${isPitNearby}<br>
-        Wumpus is nearby: ${isWumpusNearby}<br>
-        `;
+    // output.innerHTML = `
+    //     Bat is nearby: ${isBatNearby}<br>
+    //     Pit is nearby: ${isPitNearby}<br>
+    //     Wumpus is nearby: ${isWumpusNearby}<br>
+    //     `;
+    output.innerHTML = `<p>Nearby Hazards</p>`;
+    if(isBatNearby){output.innerHTML = output.innerHTML + 'Hello!!!';}
+    // if(isBatNearby){output.innerHTML = output.innerHTML + '<div class="output-item">Bat</div>';}
 }
 
 //#endregion
