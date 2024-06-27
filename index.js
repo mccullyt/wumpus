@@ -26,7 +26,6 @@ createRooms();
 replaceRoomStringsWithRefs();
 createMenu();
 
-console.log();
 
 player.currentRoom = rooms[1];
 rooms[1].addEntity(player);
@@ -53,12 +52,34 @@ function createMenu(){
     var menuItem6 = document.getElementById("menu-item-6");
     var menuItem7 = document.getElementById("menu-item-7");
     var menuItem8 = document.getElementById("menu-item-8");
+
+    var actionsContainer = document.getElementsByClassName('actions-container');
+    actionsContainer = actionsContainer[0];
+    var actionsItem1 = document.getElementById('actions-item-1');
+    var actionItem1Toggle = false;
+    actionsItem1.addEventListener("click",function () {
+        let toggled = actionItem1Toggle;
+        let toggledColor = "darkred";
+        let toggleColor = () =>{
+            toggled = !toggled;
+            actionItem1Toggle = toggled;
+            if(toggled){actionsItem1.style=`background-color:${toggledColor};`}
+            else{actionsItem1.style=`background-color:pink;`}
+        }
+        player.toggleFireMode();
+        toggleColor();
+        // actionsItem1.style="background-color:black;";
+        menuItem4.innerHTML="Fire Mode: "+player.isFireModeOn;
+    })
     
-    menuItem1.addEventListener("click", function () {updateGame('a');});
     
-    menuItem2.addEventListener("click", function () {updateGame('b');});
+    var pathsContainer = document.getElementsByClassName('paths-container');
+    pathsContainer = pathsContainer[0];
+    var pathsItem1 = document.getElementById('paths-item-1');
+    var pathsItem2 = document.getElementById('paths-item-2');
+    var pathsItem3 = document.getElementById('paths-item-3');
+
     
-    menuItem3.addEventListener("click", function () {updateGame('c');});
     
     menuItem4.addEventListener("click",function () {
         player.toggleFireMode();
@@ -79,12 +100,16 @@ function createMenu(){
         console.log("ShowHazards: "+showHazards);
         colorAllRooms();
     })
+
+    pathsItem1.addEventListener("click", () => {updateGame('a')}) 
+    pathsItem2.addEventListener("click", () => {updateGame('b')}) 
+    pathsItem3.addEventListener("click", () => {updateGame('c')}) 
         
 }
 function updatePathButtons(){
-    let pathA = document.getElementById('menu-item-1');
-    let pathB = document.getElementById('menu-item-2');
-    let pathC = document.getElementById('menu-item-3');
+    let pathA = document.getElementById('paths-item-1');
+    let pathB = document.getElementById('paths-item-2');
+    let pathC = document.getElementById('paths-item-3');
     pathA.innerHTML=player.currentRoom.arryExits[0].id;
     pathB.innerHTML=player.currentRoom.arryExits[1].id;
     pathC.innerHTML=player.currentRoom.arryExits[2].id;
@@ -107,11 +132,11 @@ function createRooms(){
     // This for loop creates room with exit values derived from string values from paths.json.
     for( var i = 1; i < 21; i++){
         let newRoom = new Room(i);
-         newRoom.arryExits.push(paths.room[i-1].pathA); //I subtract 1 to keep i aligned with num objects in paths.json
-         newRoom.arryExits.push(paths.room[i-1].pathB);
-         newRoom.arryExits.push(paths.room[i-1].pathC);
-         rooms.push(newRoom);
-     }
+        newRoom.arryExits.push(paths.room[i-1].pathA); //I subtract 1 to keep i aligned with num objects in paths.json
+        newRoom.arryExits.push(paths.room[i-1].pathB);
+        newRoom.arryExits.push(paths.room[i-1].pathC);
+        rooms.push(newRoom);
+    }
 }
 
 function displayPlayersRoom(){
